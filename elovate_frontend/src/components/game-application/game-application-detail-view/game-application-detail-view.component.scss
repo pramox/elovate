@@ -1,0 +1,61 @@
+.flexbox-panel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.flexbox-item {
+  flex: 0 1 auto;
+  margin: 1em;
+}
+
+.flexbox-item img {
+  max-width: 15vw;
+}
+
+.flex-item:nth-child(1) {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.flex-item:nth-child(2) {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.flex-item:nth-child(3) {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.wrapper-center .game-application-detailview {
+  overflow-y: scroll;
+  height: 95vh;
+}
+
+textarea {
+  height: 10vw;
+  font-size: 1em;
+  background-color: transparent;
+  border: solid var(--input-border);
+  border-color: var(--color-secondary);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  color: var(--color-font)
+}
+
+
+textarea[readonly] {
+  height: 6vw;
+  font-size: 1em;
+}
+
+.form-control #nocomments {
+  width: 80%;
+}

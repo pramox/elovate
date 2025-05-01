@@ -1,0 +1,106 @@
+<div class="wrapper-center">
+  <div class="game-application-detailview">
+    <div class="container">
+      <div class="flexbox-panel">
+        <div class="flexbox-item">
+          <h2>{{"elovate.game-application-detail.header" | translate}}</h2>
+          <form *ngIf="gameApplicationResponseDto" (ngSubmit)="onSubmit($event.submitter.id)">
+            <div class="form-group">
+              <label for="name">{{"elovate.game-application-detail.lbl.name" | translate}}</label>
+              <input class="form-control" type="text" id="name" name="name" [value]="gameApplicationResponseDto.name"
+                     readonly>
+            </div>
+
+            <div class="form-group">
+              <label>{{"elovate.game-application-detail.lbl.draw-possible" | translate}}</label><br>
+              <label class="form-control-radio-label" for="drawPossibleYes">
+                {{"elovate.game-application-detail.lbl.draw-possible.yes" | translate}}
+              </label>
+              <input type="radio" id="drawPossibleYes" name="drawPossible"
+                     [checked]="gameApplicationResponseDto.drawPossible"
+                     [disabled]="!gameApplicationResponseDto.drawPossible">
+              <label class="form-control-radio-label" for="drawPossibleNo">
+                {{"elovate.game-application-detail.lbl.draw-possible.no" | translate}}
+              </label>
+              <input type="radio" id="drawPossibleNo" name="drawPossible"
+                     [checked]="!gameApplicationResponseDto.drawPossible"
+                     [disabled]="gameApplicationResponseDto.drawPossible">
+            </div>
+
+            <div class="form-group">
+              <label for="genre">{{"elovate.game-application-detail.lbl.genre" | translate}}</label>
+              <select class="form-control" id="genre" disabled>
+                <option *ngIf="selectedGenre">{{Genre2LabelMapping[selectedGenre] | translate}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="status">{{"elovate.game-application-detail.lbl.status" | translate}}</label>
+              <select class="form-control" id="status" disabled>
+                <option>  {{this.gameApplicationStatus | translate}}</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="playersPerTeam">{{"elovate.game-application-detail.lbl.players-per-team" | translate}}</label>
+              <input class="form-control" type="text" id="playersPerTeam" name="playersPerTeam"
+                     [value]="gameApplicationResponseDto.playersPerTeam" readonly>
+            </div>
+            <button *ngIf="gameApplicationStatus === 'PENDING'" class="btn btn-primary" type="submit" id="accept">
+              {{"elovate.game-application-detail.btn.accept" | translate}}
+            </button>
+            <button *ngIf="gameApplicationStatus === 'PENDING'" class="btn btn-secondary" type="submit" id="reject">
+              {{"elovate.game-application-detail.btn.reject" | translate}}
+            </button>
+            <button *ngIf="gameApplicationStatus === 'REJECTED'" class="btn btn-secondary" type="submit" id="pending">
+              {{"elovate.game-application-detail.btn.set-pending" | translate}}
+            </button>
+            <button *ngIf="gameApplicationStatus === 'ACCEPTED'" class="btn btn-primary" id="game-details"
+                    (click)="goToGameDetails()">
+              {{"elovate.game-application-detail.go-to-game-details" | translate}}
+            </button>
+          </form>
+        </div>
+        <div class="flexbox-item">
+          <img *ngIf="gameApplicationResponseDto.image" src="{{gameApplicationResponseDto.image}}"
+               alt="Game Application Image" class="responsive-image">
+          <img *ngIf="!gameApplicationResponseDto.image" src="../../../assets/default-game-cover.png"
+               alt="Game Application Image" class="responsive-image">
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div *ngIf="gameApplicationStatus !== 'ACCEPTED'" class="col-8">
+          <form (ngSubmit)="leaveReview($event.submitter.id)">
+            <div class="form-group">
+              <textarea class="form-control" id="comment" name="comment" [(ngModel)]="commentContent"></textarea>
+            </div>
+            <button class="btn btn-primary" type="submit" id="review">
+              {{"elovate.game-application-detail.btn.leave-review" | translate}}
+            </button>
+            <button class="btn btn-secondary" type="submit" id="cancel">
+              {{"elovate.game-application-detail.btn.cancel-comment" | translate}}
+            </button>
+          </form>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8">
+          <hr>
+          <h3>{{"elovate.game-application-detail.comment-header" | translate}}</h3>
+          <hr>
+          <div id="nocomments" *ngIf="(loadedComments && loadedComments.length===0)">
+            <p>{{"elovate.game-application-detail.no-comments" | translate}}</p>
+          </div>
+          <div *ngFor="let comment of loadedComments" class="form-group">
+            <textarea id="comments" class="form-control" name="comment" [value]="comment.content" readonly></textarea>
+            <label for="comments">
+              {{"elovate.game-application-detail.comment-by" | translate}} <b>{{comment.nickName}}</b>
+              {{"elovate.game-application-detail.comment-on" | translate}} {{comment.timestamp * 1000 | date: 'medium'}}
+            </label>
+            <hr>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,59 @@
+.flexbox-panel {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+}
+
+.flexbox-item {
+  flex: 0 1 auto;
+  margin: 1em;
+}
+
+.flexbox-item img {
+  max-width: 30vw;
+}
+
+.flex-item:nth-child(1) {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.flex-item:nth-child(2) {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.flex-item:nth-child(3) {
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
+
+.wrapper-center .game-detail {
+  overflow-y: auto;
+  height: 100vh;
+  padding-bottom: 20%;
+}
+
+.code {
+  margin: 0 auto;
+  text-align: left;
+}
+
+
+.code-label {
+  max-width: 10%;
+  margin: 0 auto;
+}
+
+.instructions {
+  max-width: 80%;
+  margin: 0 auto;
+  margin-top: 5%;
+}
+

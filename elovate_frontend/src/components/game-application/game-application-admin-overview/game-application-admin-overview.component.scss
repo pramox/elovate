@@ -1,0 +1,32 @@
+.game-application-overview {
+  padding-left: 20%;
+  text-align: left;
+}
+
+
+.row img {
+  max-width: 18vw;
+}
+
+.row {
+  margin-bottom: 2em;
+}
+
+.row img:hover {
+  opacity: 0.7;
+}
+
+.uniform-image-size {
+  width: 18vw;
+  height: 32vw;
+  object-fit: cover;
+}
+
+.wrapper-center .game-application-overview {
+  overflow-y: auto;
+  height: 100vh;
+}
+
+.game-application-overview .form-control {
+  width: 25%;
+}

@@ -1,0 +1,77 @@
+image: maven:3-openjdk-17
+
+services:
+  - postgres:latest
+
+variables:
+  MAVEN_OPTS: "-Dmaven.repo.local=.m2"
+  GIT_STRATEGY: "clone"
+  POSTGRES_DB: "elovate"
+  POSTGRES_USER: "postgres"
+  POSTGRES_PASSWORD: "postgres"
+
+cache:
+  paths:
+    - .m2/
+
+stages:
+  - test
+  - docker-build
+  - deploy
+
+build-backend: # run backend build
+  stage: test
+  script:
+    - cd elovate_backend
+    - mvn clean install -DskipTests
+
+test-backend: # run backend test
+  stage: test
+  script:
+    - cd elovate_backend
+    - mvn test
+    - awk -F"," '{ instructions += $4 + $5; covered += $5 } END { print "[INFO] ", covered, "/", instructions, "instructions covered"; print "[INFO] Code coverage:", 100*covered/instructions, "% of lines covered" }' target/site/jacoco/jacoco.csv
+  coverage: '/Code coverage: \d+(?:\.\d+)?/'
+  artifacts:
+    paths:
+      - /builds/repo/2023ws-ase-pr-group/23ws-ase-pr-qse-03/elovate_backend/target/site/
+      - /builds/repo/2023ws-ase-pr-group/23ws-ase-pr-qse-03/elovate_backend/target/surefire-reports/
+    expire_in: 1 week
+
+build-frontend: # run frontend build
+  image: node:lts
+  stage: test
+  script:
+    - cd elovate_frontend
+    - npm ci --legacy-peer-deps # this option should be removed in the future (This is due to deprecated deps)
+    - npm run build
+
+
+build-backend-image:
+  stage: docker-build
+  script:
+    - cd elovate_backend
+    - mvn clean compile jib:build -Djib.to.image=registry.reset.inso-w.at/$CI_PROJECT_PATH/backend -Djib.to.tags=$CI_PIPELINE_ID -Djib.to.auth.username=$CI_REGISTRY_USER -Djib.to.auth.password=$CI_REGISTRY_PASSWORD
+  only:
+    - master
+
+build-frontend-image:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.19.0-debug
+    entrypoint: [""]
+  stage: docker-build
+  script:
+    - echo "{\"auths\":{\"$CI_REGISTRY\":{\"auth\":\"$(printf "%s:%s" "${CI_REGISTRY_USER}" "${CI_REGISTRY_PASSWORD}" | base64 | tr -d '\n')\"},\"$CI_DEPENDENCY_PROXY_SERVER\":{\"auth\":\"$(printf "%s:%s" ${CI_DEPENDENCY_PROXY_USER} "${CI_DEPENDENCY_PROXY_PASSWORD}" | base64 | tr -d '\n')\"}}}" > /kaniko/.docker/config.json
+    - /kaniko/executor --context "${CI_PROJECT_DIR}/elovate_frontend" --dockerfile "${CI_PROJECT_DIR}/elovate_frontend/Dockerfile" --destination "registry.reset.inso-w.at/2023ws-ase-pr-group/23ws-ase-pr-qse-03/frontend:$CI_PIPELINE_ID"
+  only:
+    - master
+
+deploy-elovate:
+  stage: deploy
+  image: bitnami/kubectl
+  script:
+    - sed -i 's/:latest/:'$CI_PIPELINE_ID'/g' kubernetes.yaml
+    - cat kubernetes.yaml
+    - kubectl apply -f kubernetes.yaml
+  only:
+    - master

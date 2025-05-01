@@ -1,0 +1,41 @@
+<html>
+<div class="outer-container">
+
+
+  <div class="wrapper-access">
+    <h2 *ngIf="games.length>0">
+      {{'elovate.game-access.header' | translate}}
+    </h2>
+    <h2 *ngIf="games.length==0">
+      {{'elovate.game-access.header.alt' | translate}}
+    </h2>
+
+    <div class="image-container">
+      <div *ngFor="let game of games" class="image-item" [routerLink]="['/game', game.id, 'access']" [state]="game">
+        <div class="image-inside shimmer" *ngIf="game.image ==='shimmer'"></div>
+        <div class="image-inside" *ngIf="game.image" [style.background-image]="'url(' + game.image+ ')'"></div>
+        <div class="image-inside" *ngIf="!game.image"
+             [style.background-image]="'url(/assets/default-game-cover.png)'"></div>
+        <div id="play-text">
+          <h3 style="line-height: 0.8em;">{{'elovate.game-access.addgame' | translate}}
+            <div id="games-name">{{game.name}}</div>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</html>
+
+<!--
+<div class="wrapper-left">
+  <h2>{{'elovate.game-access.header' | translate}}</h2>
+  <div class="image-container">
+    <div class="image-item" *ngFor="let game of games" [routerLink]="['/game', game.id, 'access']">
+      <h3>{{game.name}}</h3>
+      <img *ngIf="game.image" [src]="game.image"/>
+      <img *ngIf="!game.image" src="../../../assets/default-game-cover.png">
+    </div>
+  </div>
+</div>
+-->

@@ -1,0 +1,54 @@
+<div class="container pt-4 d-flex justify-content-center align-items-center flex-column">
+  <h2>{{'elovate.user-detail.header' | translate}}</h2>
+  <div class="form-group d-flex align-items-stretch">
+    <form *ngIf="user" class="row d-flex">
+      <div class="col-md-6">
+        <input type="text" class="form-control mb-2" id="register-nickname" name="nickname"
+               [placeholder]="'elovate.login-reg.placeholder.nickname' | translate"
+               [(ngModel)]="user.nickName"
+               required>
+        <input type="text" class="form-control mb-2" id="register-email" name="email"
+               [placeholder]="'elovate.login-reg.placeholder.email' | translate"
+               [(ngModel)]="user.email"
+               required>
+        <select class="form-control mb-2" id="register-role" name="role" [(ngModel)]="user.status"
+                [disabled]="!viewerIsAdmin" required>
+          <option *ngFor="let role of statuses" [value]="role">{{ role }}</option>
+        </select>
+        <select class="form-control mb-2" id="register-country-code" name="countryCode" [(ngModel)]="user.countryCode"
+                required>
+          <option *ngFor="let country of countryCodes" [value]="country">{{ country }}</option>
+        </select>
+        <ul *ngIf="isAdminView" class="nav nav-pills form-control mb-2">
+          <li class="nav-item" *ngFor="let role of user.roles">
+            <a class="nav-link p-disabled">{{ role }}</a>
+          </li>
+        </ul>
+        <div class="form-group">
+          <label for="image">Upload a title image</label>
+          <input class="form-control" type="file" id="image" name="image" (change)="onFileSelected($event)"
+                 accept="image/png, image/jpeg">
+        </div>
+        <button type="button" class="btn btn-primary" *ngIf="viewerIsAdmin || viewerIsSameUser"
+                (click)="saveUserDetails()"
+        >{{'elovate.user-detail.save-changes' | translate}}</button>
+        <ng-container *ngIf="viewerIsAdmin && user && isAdminView">
+          <button *ngIf="!viewedUserIsAdmin()" class="btn btn-primary"
+                  (click)="makeUserAdmin()">{{'elovate.user-detail.admin-promote' | translate}}</button>
+          <button *ngIf="viewedUserIsAdmin()" class="btn btn-primary"
+                  (click)="makeAdminUser()">{{'elovate.user-detail.user-demote' | translate}}</button>
+        </ng-container>
+        <button class="btn btn-dark" *ngIf="!isAdminView"
+                (click)="goToPasswordReset()">{{'elovate.password-reset.header' | translate}}</button>
+      </div>
+      <div class="col-md-6 d-flex flex-column justify-content-center">
+        <div class="image-container">
+          <img *ngIf="user?.imageBase64" src="{{user.imageBase64}}"
+               alt="Game Application Image" style="max-height: 20rem; height: auto">
+          <img *ngIf="!user?.imageBase64" src="../../../assets/default-player-avatar.jpg"
+               alt="Game Application Image" style="max-height: 20rem; height: auto">
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

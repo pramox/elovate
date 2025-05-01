@@ -1,0 +1,76 @@
+<div class="outer-container">
+  <div class="wrapper-home gradient-border background-contrast" id="box">
+    <div *ngIf="authService.isLoggedIn()">
+      <h2>{{'elovate.home.login.welcome' | translate}} {{this.username}}!</h2>
+
+      <p
+        style="margin-bottom: 0; padding-bottom: 0; line-height: 0.8em">{{'elovate.home.login.playgame.header' | translate}}</p>
+
+      <p-carousel *ngIf="myGames.length > 0" [value]="myGames" [numVisible]="5"
+                  [numScroll]="5" [circular]="true">
+        <ng-template let-userGames class="image-container" pTemplate="item">
+          <div  *ngIf="userGames.image !=='empty'" class="image-item" (click)="onCardClick(userGames)">
+            <div class="image-inside shimmer" *ngIf="userGames.image === 'shimmer'"></div>
+            <div class="image-inside" *ngIf="userGames.image"
+                 [style.background-image]="'url(' + userGames.image + ')'"></div>
+            <div class="image-inside" *ngIf="!userGames.image"
+                 [style.background-image]="'url(/assets/default-game-cover.png)'"></div>
+            <div class="play-text">
+              <h3 style="line-height: 0.8em;">{{'elovate.home.login.playgame' | translate}}
+                <div class="games-name">{{userGames.name}}</div>
+              </h3>
+            </div>
+          </div>
+          <div class="image-empty" *ngIf="userGames.image ==='empty'"></div>
+        </ng-template>
+      </p-carousel>
+
+      <div *ngIf="!myGames || myGames.length == 0" style="display:flex; justify-content:center"
+           [routerLink]="['/game/access']">
+        <div class="add image-item">
+          <i class="bi bi-plus" id="plus-icon"></i>
+        </div>
+      </div>
+
+      <div *ngIf="games.length > 0">
+        <p style="margin-bottom: 0; padding-bottom: 0; line-height: 0.8em">{{'elovate.home.login.allgames.header' | translate}}</p>
+
+        <p-carousel [value]="games" [numVisible]="5" [numScroll]="5" [circular]=true>
+          <ng-template let-otherGames class="image-container" pTemplate="item">
+            <div  *ngIf="otherGames.image !=='empty'" class="image-item" [routerLink]="['/game', otherGames.id, 'access']">
+              <div class="image-inside shimmer" *ngIf="otherGames.image ==='shimmer'"></div>
+              <div class="image-inside" *ngIf="otherGames.image"
+                   [style.background-image]="'url(' + otherGames.image+ ')'"></div>
+              <div class="image-inside" *ngIf="!otherGames.image"
+                   [style.background-image]="'url(/assets/default-game-cover.png)'"></div>
+              <div class="play-text">
+                <h3 style="line-height: 0.8em;">{{'elovate.home.login.playallgames' | translate}}
+                  <div games-name="games-name">{{otherGames.name}}</div>
+                </h3>
+              </div>
+            </div>
+            <div class="image-empty" *ngIf="otherGames.image ==='empty'"></div>
+          </ng-template>
+        </p-carousel>
+      </div>
+
+    </div>
+
+    <div *ngIf="!authService.isLoggedIn()">
+
+      <div class="main">
+        <h1><span id="logo">ELOVATE</span>{{'elovate.home.landing-page.elovate-is' | translate}}
+          <div class="roller">
+            <span id="rolltext">
+              {{'elovate.home.landing-page.gaming' | translate}}<br/>
+              {{'elovate.home.landing-page.ranking' | translate}}<br/>
+              {{'elovate.home.landing-page.connecting' | translate}}<br/>
+              {{'elovate.home.landing-page.competing' | translate}}<br/>
+            </span>
+          </div>
+        </h1>
+      </div>
+    </div>
+  </div>
+</div>
+

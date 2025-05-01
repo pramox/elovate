@@ -1,0 +1,309 @@
+// PROPERTIES
+
+@font-face {
+  font-family: 'Teko-Font';
+  src: url('assets/static/Teko-Regular.ttf');
+}
+
+html  {
+  background: url("/assets/images/background/background_4kRes_blur.png") no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+}
+
+
+.p-dialog {
+  background-color: var(--color-background);
+  color: var(--color-font);
+  border-radius: var(--border-radius);
+  font-size: var(--fontsize-p);
+  width: auto;
+  height: auto;
+  padding: 0.5em;
+}
+
+.p-button {
+  color: var(--color-secondary);
+  background-color: var(--color-background);
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0.5em 1em 0.5em 1em;
+  padding: 0.2em 0.6em 0.1em 0.6em;
+  display: inline-block;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  line-height: 1em;
+}
+
+.p-button:hover {
+  color: var(--color-background);
+  background-color: var(--color-secondary);
+  border-color: var(--color-background);
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0.5em 1em 0.5em 1em;
+  padding: 0.2em 0.6em 0.1em 0.6em;
+  display: inline-block;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  line-height: 1em;
+}
+
+.code > pre {
+  padding: 2%;
+}
+
+:root {
+  // COLOR DEFINITIONS
+  --color-primary: #DF005E;
+  --color-secondary: #CDF3FF;
+  --color-primary-light: #FFD6E7;
+  --color-font: #FFFFFF;
+  --color-success: #51fa8b;
+  --color-failure: #fa4d4d;
+  --color-background: #150E2F;
+  // FONT SIZES
+  --fontsize-h1: 5rem;
+  --fontsize-h2: 3rem;
+  --fontsize-p: 1.7rem;
+  --fontsize-small: 1.2rem;
+  // MISCELLANEOUS
+  --border-radius: 0.1em;
+  --input-border: 0.005em;
+}
+
+// GENERAL CONFIGURATION
+
+body {
+  padding: 0;
+  margin: 0;
+  overflow: auto;
+  font-family: 'Teko-Font', sans-serif;
+  color: var(--color-font); // default font color
+}
+
+// HIDE SCROLLBARS
+
+@-moz-document url-prefix() {
+  body {
+    scrollbar-width: none;
+  }
+}
+
+body::-webkit-scrollbar {
+  width: 0em;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+body::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+// FONT DEFINITIONS
+
+body {
+  font-family: 'Teko-Font', sans-serif;
+  color: var(--color-font); // default font color
+}
+
+h1, h2, h3, p {
+  font-family: 'Teko-Font', sans-serif;
+  font-style: normal;
+  line-height: normal;
+}
+
+h1 {
+  font-size: var(--fontsize-h1);
+  font-weight: 500;
+  letter-spacing: 6px;
+}
+
+h2 {
+  font-size: var(--fontsize-h2);
+  font-weight: 600;
+  letter-spacing: 4.8px;
+}
+
+p {
+  font-size: var(--fontsize-p);
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+// remove text-decorations from <a> elements
+a {
+  text-decoration: none;
+}
+
+// BUTTONS
+
+.btn {
+  width: fit-content;
+  height: fit-content;
+  text-align: center;
+  vertical-align: middle;
+  margin: 0.5em 1em 0.5em 1em;
+  padding: 0.2em 0.6em 0.1em 0.6em;
+  display: inline-block;
+  font-size: 1.5em;
+  letter-spacing: 0.1em;
+  line-height: 1em;
+}
+
+.btn-primary {
+  white-space: nowrap;
+  color: var(--color-background);
+  border-color: var(--color-secondary);
+  background-color: var(--color-secondary);
+}
+
+.btn-primary:hover {
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  background-color: var(--color-background);
+  --bs-btn-active-bg: var(--color-background);
+  --bs-btn-active-color: var(--color-secondary);
+}
+
+.btn-secondary {
+  white-space: nowrap;
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  background-color: var(--color-primary);
+}
+
+.btn-secondary:hover {
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+  background-color: var(--color-secondary);
+  --bs-btn-active-bg: var(--color-secondary);
+  --bs-btn-active-color: var(--color-primary);
+}
+
+.btn-dark {
+  white-space: nowrap;
+  color: var(--color-secondary);
+  border-color: var(--color-secondary);
+  background-color: var(--color-background);
+}
+
+.btn-dark:hover {
+  color: var(--color-background);
+  border-color: var(--color-background);
+  background-color: var(--color-secondary);
+  --bs-btn-active-bg: var(--color-secondary);
+  --bs-btn-active-color: var(--color-background);
+}
+
+.btn-copy-to-clipboard {
+  font-size: var(--fontsize-p);
+  background-color: transparent;
+  border: solid var(--input-border);
+  border-color: var(--color-secondary);
+  margin-left: 0;
+  padding: 0.375rem 0.75rem;
+  line-height: 1.5;
+  color: var(--color-font);
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+// WRAPPER
+
+.wrapper-left {
+  float: left;
+  width: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  text-align: center;
+}
+
+.wrapper-right {
+  float: right;
+  width: 50%;
+  position: absolute;
+  transform: translateX(100%);
+}
+
+.wrapper-center {
+  width: 100%;
+  height: 100%;
+  text-align: center;
+}
+
+.wrapper-login-mask {
+  padding-left: 30%;
+  padding-right: 30%;
+}
+
+// FORMS
+
+.form-group .form-control {
+  font-size: var(--fontsize-p);
+  background-color: transparent;
+  border: solid var(--input-border);
+  border-color: var(--color-secondary);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  color: var(--color-font);
+}
+
+.form-group .form-control-radio-label {
+  font-size: var(--fontsize-p);
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  margin-left: 0.5em;
+}
+
+.form-group input[type="radio"] {
+  transform: scale(1.5);
+  margin-left: 0.5em;
+}
+
+.form-group .form-check-input {
+  accent-color: var(--color-success);
+  padding: 0;
+  margin-right: 1em;
+}
+
+.form-group .form-check-input:checked {
+  color: #DF005E;
+  border-color: var(--color-secondary);
+  background-color: var(--color-success);
+}
+
+select {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  font-family: inherit;
+  background-color: var(--color-background) !important;
+}
+
+option {
+  -webkit-appearance: none !important;
+  -moz-appearance: none !important;
+  font-family: inherit;
+  background-color: var(--color-background) !important;
+}
+
+.nav-pills {
+  background-color: transparent;
+  font-size: var(--fontsize-p);
+  border: solid var(--input-border);
+  border-color: var(--color-secondary);
+  color: var(--color-font);
+}
+
+.nav-link {
+  color: var(--font-color);
+}

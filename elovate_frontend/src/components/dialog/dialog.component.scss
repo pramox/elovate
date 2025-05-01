@@ -1,0 +1,60 @@
+:host ::ng-deep {
+  .custom-dialog {
+    border-radius: 0.5rem;
+    background-color: var(--color-background);
+
+    .p-dialog-header {
+      border-radius: 0.5rem 0.5rem 0 0;
+      background-color: var(--color-secondary);
+      color: var(--color-background);
+
+      .p-dialog-title {
+        font-size: var(--fontsize-p);
+      }
+    }
+
+    .p-dialog-content {
+      border-radius: 0;
+      background-color: var(--color-secondary);
+      display: flex;
+      justify-content: center;
+      color: var(--color-background);
+    }
+
+    .p-dialog-footer {
+      border-radius: 0 0 0.5rem 0.5rem;
+      background-color: var(--color-secondary);
+
+      .p-button {
+        border-radius: 0.5rem;
+        border: 0.3rem solid;
+        color: var(--color-background);
+        background-color: var(--color-secondary);
+
+        .p-icon {
+          margin-right: 1rem;
+          width: 2rem;
+          height: 2rem;
+        }
+      }
+
+      .p-confirm-dialog-reject.p-button {
+        background-color: var(--color-failure);
+      }
+
+      .p-confirm-dialog-reject.p-button:hover {
+        transform: scale(1.1);
+        transition: transform 0.1s ease-in-out;
+      }
+
+      .p-confirm-dialog-accept.p-button {
+        background-color: var(--color-success);
+      }
+
+      .p-confirm-dialog-accept.p-button:hover {
+        transform: scale(1.1);
+        transition: transform 0.1s ease-in-out;
+      }
+    }
+  }
+}

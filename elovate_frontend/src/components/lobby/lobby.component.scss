@@ -1,0 +1,163 @@
+.outer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  height: 100vh;
+  width: 100%;
+}
+
+.inner-box-spaceholder {
+  width: 20%;
+}
+
+.inner-box {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+.inner-box-left {
+  width: 30%;
+  text-align: right;
+}
+
+.inner-box-center {
+  padding: 0;
+  width: 20%;
+  margin: 0 8rem 0 8rem;
+  background: linear-gradient(to bottom, var(--color-primary), var(--color-background));
+  border: 2px solid #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inner-box-right {
+  width: 30%;
+  text-align: left;
+}
+
+.middle-text {
+  border: none;
+  background: none;
+  font-size: 10rem;
+  font-weight: bold;
+  width: 10%;
+  border-radius: 1rem;
+}
+
+.info-row {
+  display: flex;
+  align-items: center; /* Aligns content vertically */
+  background-color: white;
+  color: black;
+  min-height: 5rem;
+  border-radius: 1rem;
+  margin-bottom: 2rem;
+}
+
+.info-row-right{
+  justify-content: left;
+}
+
+.info-row-left {
+  justify-content: right;
+}
+
+.player-profile-picture {
+  max-width: 10rem;
+  max-height: 5rem;
+  height: auto;
+}
+
+.left {
+  border-radius: 0 1rem 1rem 0;
+}
+
+.right {
+  border-radius: 1rem 0 0 1rem;
+}
+
+.profile-picture {
+  width: 30%;
+}
+
+.profile-name {
+  font-size: var(--fontsize-p);
+  font-weight: bold;
+  margin: 0;
+  width: 50%
+}
+
+.profile-ranking {
+  font-size: var(--fontsize-p);
+  margin: 0;
+  width: 20%
+}
+
+.team-ranking {
+  font-size: var(--fontsize-p);
+  margin: 0;
+  width: 40%
+}
+
+
+.game-info {
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.game-info-text {
+  width: 50%;
+  text-align: center;
+  font-size: var(--fontsize-h2);
+  border-radius: var(--border-radius);
+
+}
+
+.game-logo-container {
+  display: flex;
+}
+
+.game-logo-image {
+  height: auto;
+  width: 50%;
+}
+
+.info-row-big-lobby {
+  display: flex;
+
+}
+
+.gradient-border {
+  border: 0.4rem solid;
+  border-image-slice: 1;
+  animation: animatedgradient 2s ease alternate infinite;
+  background-clip: content-box, border-box;
+  background-origin: border-box;
+
+  --color-2: #f37055;
+  --color-3: #ef4e7b;
+  --color-4: var(--color-primary);
+  --color-5: #a166ab;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+@keyframes animatedgradient {
+  0% {
+    border-image-source: linear-gradient(60deg, var(--color-2), var(--color-4), var(--color-3));
+  }
+  50% {
+    border-image-source: linear-gradient(60deg, var(--color-4), var(--color-3), var(--color-2));
+  }
+  100% {
+    border-image-source: linear-gradient(60deg, var(--color-3), var(--color-2), var(--color-4));
+  }
+}

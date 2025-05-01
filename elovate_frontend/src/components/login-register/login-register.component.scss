@@ -1,0 +1,27 @@
+.btn-primary {
+  margin: 0;
+  margin-top: 0.3em;
+  width: 100%;
+  margin-bottom: 1em;
+}
+
+.btn-dark {
+  margin: 0;
+  width: 100%;
+  font-size: 1em;
+}
+
+.checkbox {
+  width: 100%;
+  margin-top: 1em;
+  margin-bottom: 0;
+}
+
+.google {
+  margin-bottom: 0.2em;
+  font-size: var(--fontsize-small);
+}
+
+span:hover {
+  cursor: pointer;
+}

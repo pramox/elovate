@@ -1,0 +1,104 @@
+<div class="container pt-4">
+  <div class="form-group">
+    <h2>{{'glicko2.rating-parameters.header' | translate}}</h2>
+    <form *ngIf="glicko2RatingParametersDto" class="row">
+      <div class="col-md-12">
+
+        <!-- Default Rating -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="defaultRating">{{'glicko2.default-rating.label' | translate}}
+              : {{glicko2RatingParametersDto.defaultRating | number:'1.0-2'}}</label>
+            <input type="range" class="form-control mb-2" id="defaultRating" name="defaultRating"
+                   min="1000" max="2000" step="50" [(ngModel)]="glicko2RatingParametersDto.defaultRating">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.default-rating.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Default Rating Deviation -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="defaultRatingDeviation">{{'glicko2.default-rating-deviation.label' | translate}}
+              : {{glicko2RatingParametersDto.defaultRatingDeviation | number:'1.0-2'}}</label>
+            <input type="range" class="form-control mb-2" id="defaultRatingDeviation" name="defaultRatingDeviation"
+                   min="50" max="500" step="10" [(ngModel)]="glicko2RatingParametersDto.defaultRatingDeviation">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.default-rating-deviation.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Default Rating Volatility -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="defaultRatingVolatility">{{'glicko2.default-rating-volatility.label' | translate}}
+              : {{glicko2RatingParametersDto.defaultRatingVolatility | number:'1.2-4'}}</label>
+            <input type="range" class="form-control mb-2" id="defaultRatingVolatility" name="defaultRatingVolatility"
+                   min="0.02" max="0.1" step="0.01" [(ngModel)]="glicko2RatingParametersDto.defaultRatingVolatility">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.default-rating-volatility.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Tau -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="tau">{{'glicko2.tau.label' | translate}}
+              : {{glicko2RatingParametersDto.tau | number:'1.1-3'}}</label>
+            <input type="range" class="form-control mb-2" id="tau" name="tau"
+                   min="0.2" max="1.2" step="0.05" [(ngModel)]="glicko2RatingParametersDto.tau">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.tau.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Rating Period -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="ratingPeriod">{{'glicko2.rating-period.label' | translate}}
+              : {{glicko2RatingParametersDto.ratingPeriod}}</label>
+            <input type="range" class="form-control mb-2" id="ratingPeriod" name="ratingPeriod"
+                   min="7" max="30" step="1" [(ngModel)]="glicko2RatingParametersDto.ratingPeriod">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.rating-period.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Min Rating -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="minRating">{{'glicko2.min-rating.label' | translate}}
+              : {{glicko2RatingParametersDto.minRating | number}}</label>
+            <input type="range" class="form-control mb-2" id="minRating" name="minRating"
+                   min="0" max="1000" step="100" [(ngModel)]="glicko2RatingParametersDto.minRating">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.min-rating.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Max Rating -->
+        <div class="row">
+          <div class="col-md-7">
+            <label for="maxRating">{{'glicko2.max-rating.label' | translate}}
+              : {{glicko2RatingParametersDto.maxRating | number}}</label>
+            <input type="range" class="form-control mb-2" id="maxRating" name="maxRating"
+                   min="2000" max="6000" step="100" [(ngModel)]="glicko2RatingParametersDto.maxRating">
+          </div>
+          <div class="col-md-5">
+            <h3 class="wrapping-text">{{'glicko2.max-rating.description' | translate}}</h3>
+          </div>
+        </div>
+
+        <!-- Save Button -->
+        <button type="button" class="btn btn-secondary"
+                (click)="saveGlicko2RatingParameters()">{{'glicko2.save-changes.button' | translate}}</button>
+      </div>
+    </form>
+  </div>
+</div>

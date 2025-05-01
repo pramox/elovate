@@ -1,0 +1,114 @@
+
+
+.stats-container {
+  font-size: var(--fontsize-p);
+  display: flex;
+  align-content: center;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  height: calc(100vh - 4rem);
+}
+
+.team-A-container, .team-B-container {
+  margin-left: 20%;
+  margin-right: 20%;
+  color: var(--color-secondary);
+}
+
+.stats-row {
+  font-size: var(--fontsize-p);
+  justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 5px;
+  background: var(--color-secondary);
+  opacity: 0.8;
+  color: black;
+  border-radius: 0.1em;
+}
+
+.stats-names-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.stats-field {
+  text-align: center;
+  width: 2em;
+  margin: 0 1em;
+}
+
+.icon.stats-field {
+  margin: 0
+}
+
+.current-user-font {
+  color: #0026ff;
+}
+
+.user-data-container {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.user-stats-container {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.team-name-container {
+  text-align: center;
+  padding: 20px;
+}
+
+.stats-title-row {
+  font-size: var(--fontsize-small);
+  background-color: var(--color-secondary);
+  color: black;
+}
+
+.winner-font {
+  --color-2: #f37055;
+  --color-3: #ef4e7b;
+  --color-4: var(--color-primary);
+  --color-5: #a166ab;
+
+  background: linear-gradient(-45deg, var(--color-2), var(--color-3), var(--color-4), var(--color-5));
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-fill-color: transparent;
+  background-size: 500% auto;
+  animation: gradient 6s ease infinite;
+}
+
+.winner {
+  color: white;
+  background: linear-gradient(-45deg, var(--color-2), var(--color-3), var(--color-4), var(--color-5));
+  animation: gradient 6s ease infinite;
+  background-size: 400% 400%;
+
+  --color-2: #f37055;
+  --color-3: #ef4e7b;
+  --color-4: var(--color-primary);
+  --color-5: #a166ab;
+}
+
+#home-button {
+  font-size: var(--fontsize-body);
+}
+
+
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}

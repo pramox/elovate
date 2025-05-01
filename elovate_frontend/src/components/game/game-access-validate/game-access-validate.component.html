@@ -1,0 +1,23 @@
+<html>
+<div class="wrapper-access">
+  <h2>{{'elovate.game-access.uuid.header' | translate}} {{this.gameAccess.gameName}}!</h2>
+  <p>{{'elovate.game-access.uuid.text' | translate}}
+  </p>
+  <form>
+    <div class="form-group">
+      <label for="name">UUID</label>
+      <div class="input-group">
+        <input class="form-control" type="text" id="name" name="name" [(ngModel)]="this.gameAccess.uuid" readonly
+               contenteditable="true">
+        <span class="input-group-btn">
+            <button class="btn btn-copy-to-clipboard" type="button" id="copy-button"
+                    data-toggle="tooltip" data-placement="button"
+                    title="Copy to Clipboard" (click)="copyToClipboard()">
+              <i class="bi bi-clipboard"></i>
+            </button>
+        </span>
+      </div>
+    </div>
+  </form>
+</div>
+</html>

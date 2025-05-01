@@ -1,0 +1,191 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elovate-backend-deployment
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  selector:
+    matchLabels:
+      app: elovate-backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elovate-backend
+    spec:
+      containers:
+        - name: elovate-backend-container
+          image: registry.reset.inso-w.at/2023ws-ase-pr-group/23ws-ase-pr-qse-03/backend:latest
+          resources:
+            requests:
+              memory: "2000Mi"
+              cpu: "700m"
+              ephemeral-storage: "700Mi"
+            limits:
+              memory: "3000Mi"
+              cpu: "950m"
+              ephemeral-storage: "1200Mi"
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://s-elovate-postgres:5432/elovate
+            - name: SPRING_DATASOURCE_USERNAME
+              value: postgres
+            - name: SPRING_DATASOURCE_PASSWORD
+              value: postgres
+            - name: TOKEN_SECRET_KEY
+              value: 48a868a4042f634ac04a117f00a87202131dd7c46c4b32c4acb3edc5e15f4511
+            - name: TOKEN_EXPIRATION
+              value: "3600000"
+            - name: ELOVATE_HOSTNAME
+              value: "https://23ws-ase-pr-qse-03.apps.student.inso-w.at"
+            - name: ELOVATE_API
+              value: "https://23ws-ase-pr-qse-03.apps.student.inso-w.at"
+            - name: RESOURCE_PATH
+              value: "/app/resources"
+          ports:
+            - containerPort: 8080
+      imagePullSecrets:
+        - name: secret-dockercfg
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elovate-frontend-deployment
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  selector:
+    matchLabels:
+      app: elovate-frontend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elovate-frontend
+    spec:
+      containers:
+        - name: elovate-frontend-container
+          image: registry.reset.inso-w.at/2023ws-ase-pr-group/23ws-ase-pr-qse-03/frontend:latest
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "10m"
+              ephemeral-storage: "100Mi"
+            limits:
+              memory: "280Mi"
+              cpu: "500m"
+              ephemeral-storage: "100Mi"
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: secret-dockercfg
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: elovate-postgres
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  selector:
+    matchLabels:
+      app: elovate-postgres
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: elovate-postgres
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "10m"
+              ephemeral-storage: "100Mi"
+            limits:
+              memory: "280Mi"
+              cpu: "500m"
+              ephemeral-storage: "100Mi"
+          env:
+            - name: POSTGRES_DB
+              value: elovate
+            - name: POSTGRES_USER
+              value: postgres
+            - name: POSTGRES_PASSWORD
+              value: postgres
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s-23ws-ase-pr-qse-03-service
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  type: ClusterIP
+  clusterIP: None
+  selector:
+    app: elovate-frontend
+  ports:
+    - port: 80
+      protocol: TCP
+      targetPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s-elovate-postgres
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  selector:
+    app: elovate-postgres
+  ports:
+    - protocol: TCP
+      port: 5432
+      targetPort: 5432
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: s-elovate-backend
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  selector:
+    app: elovate-backend
+  ports:
+    - protocol: TCP
+      port: 8080
+      targetPort: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: "23ws-ase-pr-qse-03-ingress"
+  namespace: 23ws-ase-pr-qse-03
+spec:
+  rules:
+    - host: "23ws-ase-pr-qse-03.apps.student.inso-w.at"
+      http:
+        paths:
+          - path: /oauth2
+            pathType: Prefix
+            backend:
+              service:
+                name: s-elovate-backend
+                port:
+                  number: 8080
+          - path: /api
+            pathType: Prefix
+            backend:
+              service:
+                name: s-elovate-backend
+                port:
+                  number: 8080
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: s-23ws-ase-pr-qse-03-service
+                port:
+                  number: 80
+
+

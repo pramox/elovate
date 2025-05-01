@@ -1,0 +1,61 @@
+<div class="d-flex flex-row align-items-center justify-content-center ">
+  <div class="d-flex flex-column align-items-center main-container min-left" *ngIf="gameDetailDto">
+    <div class="game-info">
+      {{'elovate.game-application-detail.lbl.name' | translate}}:
+      <span class="text-color-primary">
+         {{gameDetailDto.name}}
+      </span>
+    </div>
+    <div class="game-info">
+      {{ 'queue.developer_name' | translate }}:
+      <span class="text-color-primary">
+         {{gameDetailDto.developerDetails.nickname}}
+      </span>
+    </div>
+    <div class="game-info">
+      {{ 'queue.players_per_team' | translate }}:
+      <span class="text-color-primary">
+         {{gameDetailDto.playersPerTeam}}
+      </span>
+    </div>
+    <div class="image-container">
+      <img *ngIf="gameDetailDto.image" src="{{gameDetailDto.image}}" alt="Game Application Image"
+           class="responsive-image" style="max-height: 20rem; height: auto">
+      <img *ngIf="!gameDetailDto.image" src="../../../assets/default-game-cover.png" alt="Game Application Image"
+           class="responsive-image" style="max-height: 20rem; height: auto">
+    </div>
+  </div>
+
+  <div class="d-flex flex-column align-items-center main-container min-right">
+
+    <div class="d-flex flex-row queue-info text-center">
+      <div class="m-2 ">
+        <div>
+          {{ 'queue.time_in_queue' | translate }}
+        </div>
+        <div>
+          <div class="queue-time">
+            {{timeInQueue ? timeInQueue : 'queue.connecting' | translate}}
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-row queue-info align-items-center">
+      <div class="m-2">
+        <p-progressSpinner [strokeWidth]="'6'"></p-progressSpinner>
+      </div>
+    </div>
+    <div class="d-flex flex-row queue-info align-items-center">
+      <div class="m-2 d-flex flex-column align-items-center">
+        <div>
+          {{ 'queue.players_in_queue' | translate }}
+        </div>
+        <div>
+        <span class="queue-time">
+          {{playersInQueue ? playersInQueue : ''}}
+        </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

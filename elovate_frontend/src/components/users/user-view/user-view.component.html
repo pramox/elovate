@@ -1,0 +1,85 @@
+<div class="container pt-md-2">
+  <div class="form-group">
+    <h2>{{ user?.nickName }}{{"elovate.user-view.header" | translate}}</h2>
+    <form *ngIf="user" class="row">
+      <div class="col-md-6" style="display: flex; align-items: center; justify-content: center;">
+        <div style="max-width: 100%; max-height: 100vh;">
+          <img *ngIf="image" src="{{image}}"
+               alt="Game Application Image" style="width: 100%; height: 100%; object-fit: contain;">
+          <img *ngIf="!image" src="../../../assets/default-player-avatar.jpg"
+               alt="Game Application Image" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+      </div>
+      <div *ngIf="rankingResponsePaged.totalElements == 0" class="col-md-6" style="align-items: center; justify-content: center;">
+        <h3>{{"elovate.user-view.sub-header" | translate}}</h3>
+        {{ user.nickName }}{{"elocate.user-view.ranking.no-games" | translate}}
+      </div>
+      <div *ngIf="rankingResponsePaged.totalElements > 0" class="col-md-6" style="align-items: center; justify-content: center;">
+        <h3>{{"elovate.user-view.sub-header" | translate}}</h3>
+        <table class="table table-dark table-hover table-striped">
+          <thead>
+            <tr>
+              <th scope="col">{{"elovate.user-view.table-header.rank" | translate}}</th>
+              <th scope="col">{{"elovate.user-view.table-header.game" | translate}}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="game-rank" *ngFor="let gameRankingDto of rankingResponsePaged.values | paginate
+                      : {
+                          itemsPerPage: rankingResponsePaged.pageSize,
+                          currentPage: currentPage,
+                          totalItems: rankingResponsePaged.totalElements
+                        };" (click)="redirectToGame(gameRankingDto.game.id)">
+              <th scope="row">{{gameRankingDto.ranking}}</th>
+              <td>{{gameRankingDto.game.name}}</td>
+            </tr>
+          </tbody>
+        </table>
+        <div>
+          <pagination-controls *ngIf="rankingResponsePaged.totalElements > 0"
+                               [previousLabel]="'elovate.user-view.ranking.prev' | translate"
+                               [nextLabel]="'elovate.user-view.ranking.next' | translate"
+                               (pageChange)="onPageChange($event)" class="pagination-bar">
+          </pagination-controls>
+        </div>
+      </div>
+    </form>
+    <div class="inner-box-center" *ngIf="user?.friend || user?.requested || user?.requesting || user?.blocked">
+      <div *ngIf="user?.friend">
+        <h3>{{"elovate.user-view.is-friend" | translate}}{{ user?.nickName }}</h3>
+      </div>
+      <div *ngIf="user?.requested">
+        <h3>{{"elovate.user-view.has-friend-request" | translate}}{{ user?.nickName }}</h3>
+      </div>
+      <div *ngIf="user?.requesting">
+        <h3>{{ user?.nickName }}{{"elovate.user-view.wants-to-be-friend" | translate}}</h3>
+      </div>
+      <div *ngIf="user?.blocked">
+        <h3>{{"elovate.user-view.blocked" | translate}}{{ user?.nickName }}{{"elovate.user-view.blocked-2" | translate}}</h3>
+      </div>
+    </div>
+    <div class="button-row">
+      <button *ngIf="!user?.requested && !user?.friend" class="btn btn-primary btn-lg"
+              [ngClass]="{'clicked' : clicked, 'notClicked': !clicked}" (click)="add()">
+        {{"elovate.user-view.btn.add-friend" | translate}}
+      </button>
+      <button *ngIf="!user?.blocked" class="btn btn-primary btn-lg"
+              [ngClass]="{'clicked' : clicked, 'notClicked': !clicked}" (click)="block()">
+        {{"elovate.user-view.btn.block" | translate}}
+      </button>
+      <button *ngIf="user?.blocked" class="btn btn-primary btn-lg"
+              [ngClass]="{'clicked' : clicked, 'notClicked': !clicked}" (click)="unblock()">
+        {{"elovate.user-view.btn.unblock" | translate}}
+      </button>
+      <button *ngIf="user?.friend" class="btn btn-primary btn-lg"
+              [ngClass]="{'clicked' : clicked, 'notClicked': !clicked}" (click)="remove()">
+        {{"elovate.user-view.btn.unfriend" | translate}}
+      </button>
+      <button *ngIf="user?.requesting" class="btn btn-primary btn-lg"
+              [ngClass]="{'clicked' : clicked, 'notClicked': !clicked}" (click)="confirm()">
+        {{"elovate.user-view.btn.confirm" | translate}}
+      </button>
+    </div>
+  </div>
+</div>
+

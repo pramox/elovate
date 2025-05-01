@@ -1,0 +1,117 @@
+<!-- Side Bar -->
+
+<p-sidebar [(visible)]="sidebarVisible" [showCloseIcon]="false" position="left" styleClass="sidebar-custom">
+  <ng-template pTemplate="header">
+    <div style="display: flex; flex-direction: column;align-items: center;">
+      <div style="flex: 1">
+        <div (click)="navigateToPage('/profile')" class="imgContainer">
+          <span class="text">
+            <i class="bi bi-gear rotating" style="padding:0.2em"></i>
+          </span>
+          <img *ngIf="imageBase64!=''" src="{{imageBase64}}"
+               alt="Profile picture" class="img">
+          <img *ngIf="imageBase64==''" src="../../../assets/default-player-avatar.jpg"
+               alt="Profile picture" class="img">
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="content">
+    <div class="sidebar-content">
+      <div class="top-items">
+        <div class="item" (click)="navigateToPage('')">
+          <i class="bi bi-house"></i>
+          {{'elovate.header.sidebar.routing.home' | translate}}
+        </div>
+        <div class="item" (click)="navigateToPage('/friends')">
+          <i class="bi bi-people"></i>
+          {{'elovate.header.sidebar.routing.friends' | translate}}
+        </div>
+        <div class="item" (click)="navigateToPage('/game/access')">
+          <i class="bi bi-controller"></i>
+          {{'elovate.header.sidebar.routing.add-games' | translate}}
+        </div>
+        <div class="item" (click)="navigateToPage('/statistics')">
+          <i class="bi bi-graph-up"></i>
+          {{'elovate.header.sidebar.routing.statistics' | translate}}
+        </div>
+        <div class="item" (click)="navigateToPage('/developer')">
+          <i class="bi bi-code-slash"></i>
+          {{'elovate.header.sidebar.routing.developer' | translate}}
+        </div>
+        <div *ngIf="authService.isAdmin()" class="item" (click)="navigateToPage('/admin')">
+          <i class="bi bi-person-fill-gear"></i>
+          {{'elovate.header.sidebar.routing.admin-dashboard' | translate}}
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="bottom-container" (click)="this.clickLogout()">
+      <i class="bi bi-door-open"></i>
+      {{'elovate.header.sidebar.logout' | translate}}
+    </div>
+    <div class="link-container">
+      <div class="d-flex flex-row justify-content-center " style = "color:#ffffff">
+        <div class="terms-icon text-center">
+          <i class="bi bi-pen" style = "color:#ffffff"></i>
+        </div>
+        <div class="align-self-center pt-1 ">
+          <span (click)="navigateToPage('/privacy')">{{'elovate.header.terms' | translate}}</span>
+        </div>
+        <div class="align-self-center pt-1 mx-2">
+          <span (click)="navigateToPage('/imprint')">{{'elovate.header.imprint' | translate}}</span>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-sidebar>
+<!-- Top Navigation Bar -->
+
+<nav class="navbar navbar-min-height sticky-top">
+  <button type="button" class="btn btn-link" *ngIf="authService.isLoggedIn()">
+    <i class="pi pi-align-justify" (click)="sidebarVisible=true"></i>
+  </button>
+  <a *ngIf="!authService.isLoggedIn()"></a> <!-- placeholder, do not remove -->
+  <div [routerLink]="['']" id="logo">
+    ELOVATE
+  </div>
+
+  <div *ngIf="!authService.isLoggedIn()">
+    <div class="d-flex flex-row justify-content-center navbar-min-height">
+      <div class="col d-flex align-items-center">
+        <button [routerLink]="['/register']" class="btn btn-primary"
+                type="button">{{'elovate.login-reg.register' | translate}}</button>
+      </div>
+      <div class="col d-flex align-items-center">
+        <button [routerLink]="['/login']" class="btn btn-dark"
+                type="button">{{'elovate.login-reg.login' | translate}}</button>
+      </div>
+      <div class="col lang-dropdown d-flex align-items-center">
+        <select class="text-light navbar-min-height" name="language"
+                [(ngModel)]="availableLanguages.selected" (ngModelChange)="onSelectChange($event)" required>
+          <option class="lang-option" *ngFor="let item of availableLanguages.supported" [value]="item">
+            {{item}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="authService.isLoggedIn()">
+    <div class="d-flex flex-row justify-content-center ">
+      <div class="col d-flex align-items-center  ">
+        <button *ngIf="activeLobby" class="btn btn-primary" type="button"
+                (click)="navigateToLobby()">{{'elovate.header.lobby' | translate}}
+        </button>
+      </div>
+      <div class="col lang-dropdown d-flex align-items-center  ">
+        <select class="text-light navbar-min-height" name="language"
+                [(ngModel)]="availableLanguages.selected" (ngModelChange)="onSelectChange($event)" required>
+          <option class="lang-option" *ngFor="let item of availableLanguages.supported" [value]="item">
+            {{item}}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
+</nav>

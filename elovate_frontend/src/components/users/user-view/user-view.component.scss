@@ -1,0 +1,45 @@
+.button-row {
+  margin-top: 2rem;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.clicked {
+  background-color: var(--color-primary);
+}
+
+.inner-box-center {
+  padding: 0;
+  width: 100%;
+  margin: 0 auto;
+  margin-top: 2rem;
+  margin-bottom: 2rem;
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  background: linear-gradient(to bottom, var(--color-primary), var(--color-background));
+  border: 2px solid #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pagination-bar {
+  padding-right: 10rem;
+}
+
+h1 {
+  font-weight: bold;
+}
+
+// pagination-controls style
+::ng-deep ul > li:not(.active) > a {
+  color: var(--color-font) !important;
+}
+
+// pagination-controls style
+::ng-deep ul > li.active > a {
+  color: var(--color-font) !important;
+}
+
+

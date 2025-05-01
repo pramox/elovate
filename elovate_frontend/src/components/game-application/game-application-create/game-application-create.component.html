@@ -1,0 +1,81 @@
+<div class="wrapper-center">
+  <div class="game-application-create-view flexbox-panel">
+    <div
+      [ngClass]="{'game-application-create-form': !inImageEditMode, 'game-application-create-form-locked': inImageEditMode}"
+      class="flexbox-item game-application-create-form">
+      <h2>{{"elovate.game-application-create.header" | translate}}</h2>
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="name">{{"elovate.game-application-create.lbl.name" | translate}}</label>
+          <input class="form-control" type="text" id="name" name="name" [(ngModel)]="gameApplicationRequestDto.name"
+                 required>
+        </div>
+        <div class="form-group">
+          <label>{{"elovate.game-application-create.lbl.draw-possible" | translate}}</label><br>
+          <label class="form-control-radio-label" for="true">
+            {{"elovate.game-application-create.lbl.draw-possible.yes" | translate}}
+          </label>
+          <input type="radio" id="true" name="true" [(ngModel)]="gameApplicationRequestDto.drawPossible" [value]="true">
+          <label class="form-control-radio-label" for="false">
+            {{"elovate.game-application-create.lbl.draw-possible.no" | translate}}
+          </label>
+          <input type="radio" id="false" name="false" [(ngModel)]="gameApplicationRequestDto.drawPossible"
+                 [value]="false">
+        </div>
+        <div class="form-group">
+          <label for="genre">{{"elovate.game-application-create.lbl.genre" | translate}}</label>
+          <select class="form-control" id="genre" name="genre" [(ngModel)]="gameApplicationRequestDto.genre" required>
+            <option *ngFor="let genre of genres" [value]="genre">{{ genre2LabelMapper[genre] | translate}}</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="playersPerTeam">{{"elovate.game-application-create.lbl.players-per-team" | translate}}</label>
+          <select class="form-control" id="playersPerTeam" name="playersPerTeam"
+                  [(ngModel)]="gameApplicationRequestDto.playersPerTeam" required>
+            <option value="1" selected>1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="image">{{"elovate.game-application-create.lbl.upload" | translate}}</label>
+          <input class="form-control" type="file" id="image" name="image" (change)="fileChangeEvent($event)"
+                 accept="image/png, image/jpeg">
+        </div>
+        <div class="form-group">
+          <input (click)="checkBoxChange()" class="form-check-input" type="checkbox" id="flexCheckDefault">
+          <label for="flexCheckDefault">
+            {{'elovate.game-application-create.contract.checkbox-text1' | translate}}
+            <a (click)="openContract()" class="contractInfo">
+              {{'elovate.game-application-create.contract.checkbox-text2' | translate}}
+            </a>.
+          </label>
+        </div>
+        <button class="btn btn-primary" type="submit" [disabled]="!gameApplicationRequestDto.name">{{"elovate.game-application-create.btn.submit" | translate}}</button>
+      </form>
+    </div>
+    <div *ngIf="url && !inImageEditMode" class="flexbox-item">
+      <img [src]="url"/>
+    </div>
+    <div *ngIf="inImageEditMode" class="game-application-create-image-edit">
+      <button class="btn btn-secondary" (click)="saveImage($event)">
+        {{"elovate.game-application-create.img-edit.save" | translate}}
+      </button>
+      <button class="btn btn-secondary" (click)="cancelImage($event)">
+        {{"elovate.game-application-create.img-edit.cancel" | translate}}
+      </button>
+      <image-cropper
+        [imageChangedEvent]="imageChangedEvent"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="3 / 4"
+        (imageLoaded)="imageLoaded($event)"
+        (imageCropped)="imageCropped($event)"
+        (cropperReady)="cropperReady()"
+        (loadImageFailed)="loadImageFailed()"
+      ></image-cropper>
+      <img [src]="croppedImage">
+    </div>
+  </div>
+</div>

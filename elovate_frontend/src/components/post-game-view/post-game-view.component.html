@@ -1,0 +1,61 @@
+<div class="stats-container">
+
+  <div class="team-A-container">
+
+    <div class="stats-names-container">
+        <div class="stats-field" *ngFor="let name of this.getColumnNames()">{{name}}</div>
+    </div>
+
+    <div *ngFor="let user of finishedGame.teamA">
+      <div class="stats-row" [ngClass]="{'winner': this.finishedGame.gameEndResult.toString() === GameEndResult[GameEndResult.TEAM_A_WINNER]}" >
+
+        <div class="user-data-container">
+          <div class="stats-field" [ngClass]="{'current-user-font': user.user.id === this.authService.getLoggedInUserId()}">{{ user.user.name }}</div>
+          <div class="stats-field">{{ Math.round(user.ratingBefore) }}</div>
+          <i class="bi bi-arrow-right stats-field icon"></i>
+          <div class="stats-field">{{ Math.round(user.ratingAfter) }}</div>
+        </div>
+
+        <div class="user-stats-container">
+          <div class="stats-field" *ngFor="let stat of user.customStats">{{ stat.statValue }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="team-name-container">
+    <div class="team-names" [ngClass]="{'winner-font': this.finishedGame.gameEndResult.toString() === GameEndResult[GameEndResult.TEAM_A_WINNER]}"><h1>TEAM A</h1></div>
+    <div class="team-winner-text" *ngIf="this.finishedGame.gameEndResult.toString() === GameEndResult[GameEndResult.TEAM_A_WINNER]"><h3>{{'elovate.post-game.winner-text-A' | translate}}</h3></div>
+    <div class="team-winner-text" *ngIf="this.finishedGame.gameEndResult.toString() === GameEndResult[GameEndResult.TEAM_B_WINNER]"><h3>{{'elovate.post-game.winner-text-B' | translate}}</h3></div>
+    <div class="team-winner-text" *ngIf="this.finishedGame.gameEndResult.toString() === GameEndResult[GameEndResult.DRAW]"><h3>{{'elovate.post-game.winner-text-DRAW' | translate}}</h3></div>
+    <div class="team-names" [ngClass]="{'winner-font': this.finishedGame.gameEndResult.toString() == GameEndResult[GameEndResult.TEAM_B_WINNER]}"><h1>TEAM B</h1></div>
+  </div>
+
+  <div class="team-B-container">
+
+    <div class="stats-names-container">
+      <div class="stats-field" *ngFor="let name of this.getColumnNames()">{{name}}</div>
+    </div>
+
+    <div *ngFor="let user of finishedGame.teamB">
+      <div class="stats-row" [ngClass]="{'winner': this.finishedGame.gameEndResult.toString() == GameEndResult[GameEndResult.TEAM_B_WINNER]}">
+
+        <div class="user-data-container">
+          <div class="stats-field" [ngClass]="{'current-user-font': user.user.id === this.authService.getLoggedInUserId()}">{{ user.user.name }}</div>
+          <div class="stats-field">{{ Math.round(user.ratingBefore) }}</div>
+          <i class="bi bi-arrow-right stats-field icon"></i>
+          <div class="stats-field">{{ Math.round(user.ratingAfter) }}</div>
+        </div>
+
+        <div class="user-stats-container">
+          <div class="stats-field" *ngFor="let stat of user.customStats">{{ stat.statValue }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div style="display:flex; justify-content:center;">
+    <button class="btn btn-primary" id="home-button" type="button" (click)="navigateToHome()">{{'elovate.post-game.return-to-home' | translate}}</button>
+  </div>
+
+</div>

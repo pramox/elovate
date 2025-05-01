@@ -1,0 +1,55 @@
+<h2>{{"elovate.api-key.title" | translate}}</h2>
+<p>{{"elovate.api-key.description" | translate}}</p>
+<br>
+<p>{{"elovate.api-key.warning"| translate}}</p>
+<div>
+  <button class="btn btn-secondary" type="button"
+          (click)="confirmDelete()">
+          {{'elovate.api-key.btn.delete-api-key' | translate}}
+  </button>
+  <button class="btn btn-secondary" type="button"
+          (click)="confirmGenerate()">
+          {{'elovate.api-key.btn.generate-api-key' | translate}}
+  </button>
+  <button class="btn btn-secondary" type="button"
+          (click)="showApiKeyHash()">{{"elovate.api-key.btn.show-hash" | translate}}
+  </button>
+  <div *ngIf="apiKey && visible && !hash">
+    <form>
+      <div class="form-group">
+        <label for="name">{{"elovate.api-key.lbl.api-key" | translate}}</label>
+        <div class="input-group">
+          <input class="form-control" type="text" id="name" name="name" [(ngModel)]="this.apiKey.key" readonly
+                 contenteditable="true">
+          <span class="input-group-btn">
+            <button class="btn btn-copy-to-clipboard" type="button" id="copy-button"
+                    data-toggle="tooltip" data-placement="button"
+                    title="Copy to Clipboard" (click)="copyToClipboard()">
+              <i class="bi bi-clipboard"></i>
+            </button>
+        </span>
+        </div>
+      </div>
+    </form>
+    <p>{{"elovate.api-key.lbl.date" | translate}} {{ apiKey.timestamp}} UTC</p>
+  </div>
+  <div *ngIf="apiKey && visible && hash">
+    <form>
+    <div class="form-group">
+      <label for="name">{{"elovate.api-key.lbl.hash" | translate}}</label>
+      <div class="input-group">
+        <input class="form-control form-control-hash" type="text" id="name" name="name" [(ngModel)]="this.apiKey.key" readonly
+               contenteditable="true">
+        <span class="input-group-btn">
+            <button class="btn btn-copy-to-clipboard" type="button" id="copy-button"
+                    data-toggle="tooltip" data-placement="button"
+                    title="Copy to Clipboard" (click)="copyToClipboard()">
+              <i class="bi bi-clipboard"></i>
+            </button>
+        </span>
+      </div>
+    </div>
+    </form>
+    <p>{{"elovate.api-key.lbl.date" | translate}} {{ apiKey.timestamp}} UTC</p>
+  </div>
+</div>

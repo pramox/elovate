@@ -1,0 +1,46 @@
+.main-container {
+  background: rgba(223, 0, 94, 0.12);
+  border: 0.6rem solid #DF005E;
+  margin: 5rem;
+  padding: 2rem;
+  border-radius: 2rem;
+}
+
+.image-container {
+  border: 0.4rem solid #DF005E;
+  border-radius: 0.5rem;
+  background-color: black;
+  overflow: hidden;
+  margin:1rem;
+  width: fit-content;
+  align-content: center;
+}
+
+.text-color-primary {
+  color: var(--color-primary);
+}
+
+.game-info {
+  padding: 0.3rem 1rem;
+  margin:1rem;
+  border-radius: 0.7rem;
+  background: white;
+  color: black;
+  font-size: 2rem;
+}
+
+.queue-info {
+  font-size: var(--fontsize-p);
+}
+
+.queue-time {
+  font-size: var(--fontsize-h1);
+}
+
+.min-left {
+  width: 30%;
+}
+
+.min-right {
+  width: 25%;
+}

@@ -1,0 +1,81 @@
+<div class="wrapper-friends">
+<div class="roller">
+  <h2 id="rolltext">
+    {{"elovate.friend-dashboard.roll-txt1" | translate}}<br/>
+    {{"elovate.friend-dashboard.roll-txt2" | translate}}<br/>
+  </h2>
+</div>
+  <div class="button-row">
+    <button class="btn btn-primary btn-lg" [ngClass]="{'clicked' : showFriends, 'notClicked': !showFriends}" (click)="fetchAllFriends(true)">
+      {{"elovate.friend-dashboard.show-friends" | translate}}
+    </button>
+    <button class="btn btn-primary btn-lg" [ngClass]="{'clicked' : showBlocked, 'notClicked': !showBlocked}" (click)="fetchAllBlocked(true)">
+      {{"elovate.friend-dashboard.show-blocked" | translate}}
+    </button>
+    <button class="btn btn-primary btn-lg" [ngClass]="{'clicked' : addFriends, 'notClicked': !addFriends}" (click)="findFriends(true)">
+      {{"elovate.friend-dashboard.find-friends" | translate}}
+    </button>
+    <button class="btn btn-primary btn-lg" [ngClass]="{'clicked' : showFriendRequests, 'notClicked': !showFriendRequests}" (click)="fetchAllFriendRequests(true)">
+      {{"elovate.friend-dashboard.show-friend-requests" | translate}}
+    </button>
+  </div>
+
+
+  <div class="outer">
+  <div class="inner-box-center">
+
+    <input *ngIf="showFriends || showBlocked || addFriends" class="form-control user-filter" (input)="fetchByNickname(input.value, true)"  type="text" [placeholder]="'elovate.friend-dashboard.search-placeholder' | translate" #input>
+
+    <div *ngIf="usersPaged.totalElements == 0 && showFriends">
+      {{"elovate.friend-dashboard.no-friends" | translate}}
+    </div>
+
+    <div *ngIf="usersPaged.totalElements == 0 && showBlocked">
+      {{"elovate.friend-dashboard.no-blocked" | translate}}
+    </div>
+
+    <div *ngIf="showFriendRequests && usersPaged.totalElements > 0">
+      {{"elovate.friend-dashboard.some-requests" | translate}}
+    </div>
+
+    <div *ngIf="showFriendRequests && usersPaged.totalElements == 0">
+      {{"elovate.friend-dashboard.no-requests" | translate}}
+    </div>
+
+    <div>
+      <pagination-controls *ngIf="usersPaged.totalElements > 0"
+                           [previousLabel]="'elovate.friend-dashboard.prev' | translate"
+                           [nextLabel]="'elovate.friend-dashboard.next' | translate"
+                           (pageChange)="onPageChange($event)" class="pagination-bar">
+      </pagination-controls>
+    </div>
+
+
+    <div class="info-row info-row-left" *ngFor="let user of usersPaged.values | paginate
+              : {
+                  itemsPerPage: usersPaged.pageSize,
+                  currentPage: currentPage,
+                  totalItems: usersPaged.totalElements
+                };">
+      <div class="wrapper-friend-box" (click)="redirectToProfile(user.id)">
+        <div
+          class="profile-name">{{user.nickName.length > 20 ? user.nickName.substring(0, 20) + "..." : user.nickName}}
+        </div>
+        <div class="profile-filler"></div>
+        <div *ngIf="images[user.id]" class="profile-picture">
+          <img src="{{images[user.id]}}" alt="Profile picture" class="player-profile-picture left">
+        </div>
+        <div *ngIf="!images[user.id]" class="profile-picture">
+          <img src="../../../assets/default-player-avatar.jpg"  alt="Profile picture" class="player-profile-picture left">
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
+
+
+
+

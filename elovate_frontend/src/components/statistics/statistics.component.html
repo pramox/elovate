@@ -1,0 +1,152 @@
+<div *ngIf="statsStatus === StatsStatus.USER_HAS_THIS_GAME" class="main-stats">
+  <div class="d-flex flex-row justify-content-center align-self-center">
+    <div class="text-center p-2">
+      <h2>{{'elovate.header.sidebar.routing.statistics' | translate}} </h2>
+    </div>
+    <div class="d-flex flex-column justify-content-center form-group" *ngIf="myGames.length>0">
+      <select class="text-light navbar-min-height game-dropdown-selected"
+              [(ngModel)]="currentGameName" (ngModelChange)="routeToGame($event)" required>
+
+        <option *ngFor="let item of myGames" [value]="item.name" class="game-dropdown">
+          {{item.name}}
+        </option>
+      </select>
+    </div>
+  </div>
+  <hr>
+
+  <div class="d-flex align-self-stretch justify-content-center">
+    <div class="d-flex flex-column w-50 align-items-stretch">
+      <div class="stats-container row f-flex flex-column justify-content-center text-center">
+        <div class="h1">{{'rank_distribution' | translate}}</div>
+        <div class="percentile-child p-3">
+          <div class="h3">
+            {{'better_than' | translate}} <span style="color:var(--color-primary)">{{ calculatePercentage() }}%</span> {{'of_other_players' | translate}}
+            <br>{{'total_players' | translate}} {{getTotalPlayersOfThisGame()}}
+          </div>
+        </div>
+        <div class="row align-items-stretch percentile-child h-50" *ngIf="linePlotData && linePlotData.length > 0">
+          <ngx-charts-bar-vertical
+            [legend]="false"
+            [legendTitle]="'Elo distribution among all players'"
+            [customColors]="distributionColors"
+            [showGridLines]="false"
+            [results]="rankDistributionForNgx"
+            [gradient]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showDataLabel]="true"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxisLabel]="'Rating'"
+            [yAxisLabel]="'Percent'"
+            style="fill: white;">
+          </ngx-charts-bar-vertical>
+        </div>
+      </div>
+      <div *ngIf="this.linePlotData" class="stats-container row f-flex flex-column justify-content-center text-center">
+        <div class="h1">{{'elo_history' | translate}}</div>
+        <div *ngIf="this.linePlotData[0].series.length>1" class="row align-items-stretch percentile-child h-70">
+          <ngx-charts-area-chart
+            [legend]="false"
+            [legendTitle]="'Elo history chart'"
+            [results]="linePlotData"
+            [showXAxisLabel]="true"
+            [showYAxisLabel]="true"
+            [xAxis]="true"
+            [yAxis]="true"
+            [showGridLines]="false"
+            [timeline]="true"
+            [yScaleMin]="yScaleMin"
+            [xAxisLabel]="'Time'"
+            [yAxisLabel]="'Elo history'"
+            style="fill: white;"
+          >
+          </ngx-charts-area-chart>
+        </div>
+        <div *ngIf="!this.linePlotData || this.linePlotData[0].series.length<=1">
+          <div class="h4">{{'not_enough_history' | translate}} </div>
+        </div>
+      </div>
+      <div class="stats-container row f-flex flex-column justify-content-center align-items-center text-center">
+        <div class="h1">{{'leaderboards' | translate}}</div>
+        <div class="row">
+          <h3>{{'global' | translate}}</h3>
+          <div class="leaderboard-container">
+            <div class="leaderboard-row leaderboard-title-row">
+              <div class="leaderboard-field">{{scoreTitles[0]}}</div>
+              <div class="leaderboard-field">{{scoreTitles[1]}}</div>
+              <div class="leaderboard-field">{{scoreTitles[2]}}</div>
+              <div class="leaderboard-field">{{scoreTitles[3]}}</div>
+            </div>
+            <div *ngFor="let player of globalLeaderboard">
+              <div *ngIf="player.userId != this.userId" class="leaderboard-row ">
+                <div class="leaderboard-field">{{ player.leaderboardPosition }}</div>
+                <div class="leaderboard-field">{{ player.username }}</div>
+                <div class="leaderboard-field">{{ player.rating  | number:'1.0-0' }}</div>
+                <div class="leaderboard-field">{{ player.countryCode }}</div>
+              </div>
+              <div *ngIf="player.userId == this.userId" class="leaderboard-row user">
+                <div class="leaderboard-field">{{ player.leaderboardPosition }}</div>
+                <div class="leaderboard-field">{{ player.username }}</div>
+                <div class="leaderboard-field">{{ player.rating | number:'1.0-0'  }}</div>
+                <div class="leaderboard-field">{{ player.countryCode }}</div>
+              </div>
+            </div>
+            <div *ngIf="showUserSeparatelyGlobal" class="leaderboard-row user">
+              <div class="leaderboard-field">{{ userInGlobalLeaderboard.leaderboardPosition }}</div>
+              <div class="leaderboard-field">{{ userInGlobalLeaderboard.username }}</div>
+              <div class="leaderboard-field">{{ userInGlobalLeaderboard.rating  | number:'1.0-0'  }}</div>
+              <div class="leaderboard-field">{{ userInGlobalLeaderboard.countryCode }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <h3>{{'country' | translate}}</h3>
+          <div class="leaderboard-container">
+            <div class="leaderboard-row leaderboard-title-row">
+              <div class="leaderboard-field">{{scoreTitles[0]}}</div>
+              <div class="leaderboard-field">{{scoreTitles[1]}}</div>
+              <div class="leaderboard-field">{{scoreTitles[2]}}</div>
+              <div class="leaderboard-field">{{scoreTitles[3]}}</div>
+            </div>
+            <div *ngFor="let player of countryLeaderboard">
+              <div *ngIf="player.userId != this.userId" class="leaderboard-row">
+                <div class="leaderboard-field">{{ player.leaderboardPosition }}</div>
+                <div class="leaderboard-field">{{ player.username }}</div>
+                <div class="leaderboard-field">{{ player.rating | number:'1.0-0' }}</div>
+                <div class="leaderboard-field">{{ player.countryCode }}</div>
+              </div>
+              <div *ngIf="player.userId == this.userId" class="leaderboard-row user">
+                <div class="leaderboard-field">{{ player.leaderboardPosition }}</div>
+                <div class="leaderboard-field">{{ player.username }}</div>
+                <div class="leaderboard-field">{{ player.rating | number:'1.0-0' }}</div>
+                <div class="leaderboard-field">{{ player.countryCode }}</div>
+              </div>
+            </div>
+            <div *ngIf="showUserSeparatelyCountry" class="leaderboard-row user">
+              <div class="leaderboard-field">{{ userInCountryLeaderboard.leaderboardPosition }}</div>
+              <div class="leaderboard-field">{{ userInCountryLeaderboard.username }}</div>
+              <div class="leaderboard-field">{{ userInCountryLeaderboard.rating  | number:'1.0-0'  }}</div>
+              <div class="leaderboard-field">{{ userInCountryLeaderboard.countryCode }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+
+<div class="d-flex flex-row justify-content-center align-self-center vh-100">
+  <div class="row text-center align-self-center">
+    <h2 *ngIf="statsStatus === StatsStatus.LOADING || statsStatus === StatsStatus.USER_DOES_NOT_HAVE_THIS_GAME">
+      {{'loading' | translate}}
+    </h2>
+    <h2 *ngIf="statsStatus === StatsStatus.USER_HAS_NO_GAMES" >
+      {{'no_games_no_statistics' | translate}}
+    </h2>
+  </div>
+</div>

@@ -1,0 +1,15 @@
+label {
+  font-size: 2em;
+  margin-top: 0.2em;
+}
+
+.wrapping-text {
+  word-wrap: break-word; /* Older browsers */
+  overflow-wrap: break-word; /* As of CSS3 */
+}
+
+.btn-secondary {
+  margin: 0;
+  margin-top: 0.5em;
+  width: 100%;
+}
